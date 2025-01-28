@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "starminer-additions",
+	"version": "${version}",
+	"name": "Starminer additions",
+	"description": "This adds some items for the Star Miner Odyssey modpack. Most other functionality is relegated to KubeJS.",
+	"authors": [
+		"MemezForBeanz"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/starminer-additions/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.memezforbeanz.starmineroddysey.StarminerAdditions"
+		],
+		"fabric-datagen": [
+			"net.memezforbeanz.starmineroddysey.StarminerAdditionsDataGenerator"
+		]
+	},
+	"mixins": [
+		"starminer-additions.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.10",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
