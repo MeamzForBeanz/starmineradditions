@@ -10,6 +10,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -24,6 +25,8 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.renderer.layer.AutoGlowingGeoLayer;
+import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 import software.bernie.geckolib.util.RenderUtils;
 import team.reborn.energy.api.EnergyStorage;
 import team.reborn.energy.api.base.SimpleEnergyItem;
@@ -46,7 +49,6 @@ public class StellarCoreItem extends Item implements GeoItem, SimpleEnergyItem {
         this.maxInput = maxInput;
         this.maxOutput = maxOutput;
     }
-
 
     @Override
     public boolean isDamageable() {
@@ -125,16 +127,17 @@ public class StellarCoreItem extends Item implements GeoItem, SimpleEnergyItem {
     }
 
     private void spawnEnergyTransferEffects(World world, BlockPos pos) {
-        if (!world.isClient) {
-            world.playSound(
-                    null,
-                    pos,
-                    SoundEvents.BLOCK_RESPAWN_ANCHOR_CHARGE,
-                    SoundCategory.BLOCKS,
-                    0.3f,
-                    1.0f
-            );
+        if (world.isClient) {
+            return;
         }
+        world.playSound(
+                null,
+                pos,
+                SoundEvents.BLOCK_RESPAWN_ANCHOR_CHARGE,
+                SoundCategory.BLOCKS,
+                0.3f,
+                1.0f
+        );
     }
 
     @Override

@@ -5,11 +5,28 @@ import net.minecraft.block.BlockState;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
+import net.minecraft.world.dimension.DimensionType;
 
 public abstract class HeliumFluid extends FluidAbstract {
+    @Override
+    protected int getFlowSpeed(WorldView worldView) {
+        int flowSpeed = 2;
+        if (worldView instanceof World world) {
+            // Get the dimension ID
+            RegistryKey<World> dimension = world.getRegistryKey();
+
+            if (dimension == World.OVERWORLD) {
+                flowSpeed = 0;
+            }
+        }
+        return flowSpeed;
+    }
+
     @Override
     public Fluid getStill() {
         return ModFluids.STILL_HELIUM;

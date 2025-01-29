@@ -11,6 +11,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.memezforbeanz.starminerodyssey.item.custom.StellarCoreItem;
+import net.minecraft.util.Rarity;
 
 import static net.memezforbeanz.starminerodyssey.fluid.ModFluids.HELIUM_BUCKET;
 
@@ -18,7 +19,7 @@ import static net.memezforbeanz.starminerodyssey.fluid.ModFluids.HELIUM_BUCKET;
 public class ModItems {
     public static final Item STAR_CORE = registerItem("star_core",
             new StellarCoreItem(
-                    new FabricItemSettings(),
+                    new FabricItemSettings().rarity(Rarity.EPIC),
                     890909000, 10000000, 10000000
             ));
 

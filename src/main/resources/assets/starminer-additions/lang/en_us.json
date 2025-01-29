@@ -5,5 +5,5 @@
   "item.starminerodyssey.stellar_core.energy": "§bEnergy: %s / %s §bE",
   "item.starminerodyssey.stellar_core.percentage": "§1Charge: %s%%",
   "item.starminerodyssey.stellar_core.transfer_rate": "§4Transfer Rate: %s §4E/t",
-  "item.starminerodyssey.star_helium_bucket": "Helium"
+  "item.starminer-additions.star_helium_bucket": "Helium"
 }

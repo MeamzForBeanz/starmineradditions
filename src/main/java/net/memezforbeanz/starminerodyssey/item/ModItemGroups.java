@@ -2,6 +2,7 @@ package net.memezforbeanz.starminerodyssey.item;
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.memezforbeanz.starminerodyssey.StarminerAdditions;
+import net.memezforbeanz.starminerodyssey.fluid.ModFluids;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
@@ -14,7 +15,7 @@ public class ModItemGroups {
             new Identifier(StarminerAdditions.MOD_ID, "starminer"),
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.starminer"))
                     .icon(() -> new ItemStack(ModItems.STAR_CORE)).entries((displayContext, entries) -> {
-
+                        entries.add(ModFluids.HELIUM_BUCKET);
                         entries.add(ModItems.STAR_CORE);
 
 
