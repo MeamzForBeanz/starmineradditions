@@ -1,9 +1,9 @@
 {
 	"required": true,
-	"package": "net.memezforbeanz.starmineroddysey.mixin",
+	"package": "net.memezforbeanz.starminerodyssey.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"ExampleMixin"
+		"AbstractFieldGeneratorBlockEntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

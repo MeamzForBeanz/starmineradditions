@@ -1,10 +1,16 @@
-package net.memezforbeanz.starmineroddysey;
+package net.memezforbeanz.starminerodyssey;
 
 import net.fabricmc.api.ModInitializer;
 
-import net.memezforbeanz.item.ModItems;
+import net.memezforbeanz.starminerodyssey.fluid.ModFluids;
+import net.memezforbeanz.starminerodyssey.item.ModItems;
+import net.memezforbeanz.starminerodyssey.item.ModItemGroups;
+import net.memezforbeanz.starminerodyssey.blocks.ModBlocks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+
+
 
 public class StarminerAdditions implements ModInitializer {
 	public static final String MOD_ID = "starminer-additions";
@@ -19,6 +25,9 @@ public class StarminerAdditions implements ModInitializer {
 		// Proceed with mild caution.
 
 		LOGGER.info("This truly has been a star miner odyssey...");
-		ModItems.registerModItems();
+		ModItemGroups.register();
+		ModItems.register();
+		ModFluids.register();
+		ModBlocks.register();
 	}
 }
