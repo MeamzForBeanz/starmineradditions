@@ -6,5 +6,7 @@ import software.bernie.geckolib.renderer.GeoItemRenderer;
 public class StellarCoreRenderer extends GeoItemRenderer<StellarCoreItem> {
     public StellarCoreRenderer() {
         super(new StellarCoreModel());
+       // this.addRenderLayer(new AutoGlowingGeoLayer<>(this));
     }
+
 }

@@ -15,7 +15,7 @@ repositories {
 		url = "https://api.modrinth.com/maven"
 	}
 	maven { url 'https://maven.ladysnake.org/releases' }
-
+	maven { url "https://maven.teamresourceful.com/repository/maven-public/" }
 	maven { url "https://maven.shedaniel.me/" }
 	maven { url "https://maven.terraformersmc.com/releases/" }
 	maven { url 'https://jitpack.io' }
@@ -44,14 +44,13 @@ fabricApi {
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+	mappings loom.officialMojangMappings()
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	include modApi("teamreborn:energy:$energy_version")
 
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
 	modImplementation "curse.maven:reborncore-237903:4708961"
 	modImplementation "curse.maven:techreborn-233564:4708962"
 	modImplementation("software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${geckolib_version}")
@@ -66,6 +65,7 @@ dependencies {
 	modImplementation("com.github.qouteall:GravityChanger:v1.0.2-mc1.20.1")
 	modImplementation "curse.maven:amethyst-gravity-reattracted-953013:4976171"
 	implementation("com.eliotlash.mclib:mclib:20")
+	modImplementation group: "earth.terrarium.adastra", name: "ad_astra-fabric-$minecraft_version", version: "$adastra_version"
 }
 
 processResources {

@@ -1,24 +1,24 @@
 package net.memezforbeanz.starminerodyssey.fluid;
 
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.fluid.FlowableFluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldView;
-
-public abstract class FluidAbstract extends FlowableFluid {
+public abstract class FluidAbstract extends FlowingFluid {
     /**
      * @return whether the given fluid an instance of this fluid
      */
     @Override
-    public boolean matchesType(net.minecraft.fluid.Fluid fluid) {
-        return fluid == getStill() || fluid == getFlowing();
+    public boolean isSame(Fluid fluid) {
+        return fluid == getSource() || fluid == getFlowing();
     }
 
     /**
@@ -26,9 +26,9 @@ public abstract class FluidAbstract extends FlowableFluid {
      * the block's loot table. Lava plays the "block.lava.extinguish" sound.
      */
     @Override
-    protected void beforeBreakingBlock(WorldAccess world, BlockPos pos, BlockState state) {
-        final BlockEntity blockEntity = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
-        Block.dropStacks(state, world, pos, blockEntity);
+    protected void beforeDestroyingBlock(LevelAccessor level, BlockPos pos, BlockState state) {
+        final BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
+        Block.dropResources(state, level, pos, blockEntity);
     }
 
     /**
@@ -38,7 +38,7 @@ public abstract class FluidAbstract extends FlowableFluid {
      * @return whether the given Fluid can flow into this FluidState
      */
     @Override
-    protected boolean canBeReplacedWith(FluidState fluidState, BlockView blockView, BlockPos blockPos, net.minecraft.fluid.Fluid fluid, Direction direction) {
+    protected boolean canBeReplacedWith(FluidState state, BlockGetter level, BlockPos pos, Fluid fluid, Direction direction) {
         return false;
     }
 
@@ -47,23 +47,15 @@ public abstract class FluidAbstract extends FlowableFluid {
      * Water returns 4. Lava returns 2 in the Overworld and 4 in the Nether.
      */
     @Override
-    protected int getFlowSpeed(WorldView worldView) {
+    protected int getDropOff(LevelReader level) {
         return 4;
-    }
-
-    /**
-     * Water returns 1. Lava returns 2 in the Overworld and 1 in the Nether.
-     */
-    @Override
-    protected int getLevelDecreasePerBlock(WorldView worldView) {
-        return 1;
     }
 
     /**
      * Water returns 5. Lava returns 30 in the Overworld and 10 in the Nether.
      */
     @Override
-    public int getTickRate(WorldView worldView) {
+    public int getTickDelay(LevelReader level) {
         return 5;
     }
 
@@ -71,7 +63,7 @@ public abstract class FluidAbstract extends FlowableFluid {
      * Water and Lava both return 100.0F.
      */
     @Override
-    protected float getBlastResistance() {
+    protected float getExplosionResistance() {
         return 100.0F;
     }
 }
