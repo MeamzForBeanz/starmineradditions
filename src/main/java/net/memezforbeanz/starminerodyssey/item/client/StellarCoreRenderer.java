@@ -2,7 +2,6 @@ package net.memezforbeanz.starminerodyssey.item.client;
 
 import net.memezforbeanz.starminerodyssey.StarminerAdditions;
 import net.memezforbeanz.starminerodyssey.item.custom.StellarCoreItem;
-import net.minecraft.util.Identifier;
 import software.bernie.geckolib.renderer.GeoItemRenderer;
 import software.bernie.geckolib.renderer.layer.AutoGlowingGeoLayer;
 
