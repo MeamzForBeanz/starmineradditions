@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.memezforbeanz.starminerodyssey.StarminerAdditions;
 import net.memezforbeanz.starminerodyssey.item.client.StellarCoreRenderer;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -50,7 +51,6 @@ public class StellarCoreItem extends Item implements GeoItem, SimpleEnergyItem {
         this.maxOutput = maxOutput;
     }
 
-
     @Override
     public boolean isBarVisible(ItemStack stack) {
         return getStoredEnergy(stack) > 0;
@@ -70,8 +70,11 @@ public class StellarCoreItem extends Item implements GeoItem, SimpleEnergyItem {
     @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
         long stored = getStoredEnergy(stack);
+
         float percentage = (float) stored / capacity * 100;
         tooltip.add(Component.translatable("item.starminerodyssey.stellar_core.info"));
+
+        if (!Screen.hasShiftDown()) return;
 
         tooltip.add(Component.translatable("item.starminerodyssey.stellar_core.energy",
                 String.format("%,d", stored),

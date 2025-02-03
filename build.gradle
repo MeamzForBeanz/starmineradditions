@@ -66,6 +66,7 @@ dependencies {
 	modImplementation "curse.maven:amethyst-gravity-reattracted-953013:4976171"
 	implementation("com.eliotlash.mclib:mclib:20")
 	modImplementation group: "earth.terrarium.adastra", name: "ad_astra-fabric-$minecraft_version", version: "$adastra_version"
+
 }
 
 processResources {

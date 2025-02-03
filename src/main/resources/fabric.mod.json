@@ -16,13 +16,11 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"net.memezforbeanz.starminerodyssey.StarminerAdditions"
+			"net.memezforbeanz.starminerodyssey.StarminerAdditions::init"
+
 		],
 		"fabric-datagen": [
 			"net.memezforbeanz.starminerodyssey.StarminerAdditionsDataGenerator"
-		],
-		"client" : [
-			"net.memezforbeanz.starminerodyssey.StarminerAdditionsClient"
 		]
 	},
 	"mixins": [

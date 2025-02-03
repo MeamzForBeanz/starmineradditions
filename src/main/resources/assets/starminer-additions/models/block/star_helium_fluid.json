@@ -1,8 +1,5 @@
 {
-  "parent": "block/water",
   "textures": {
-    "particle": "starminer-additions:block/star_helium_still",
-    "still": "starminer-additions:block/star_helium_still",
-    "flowing": "starminer-additions:block/star_helium_flow"
+    "particle": "minecraft:block/water_still"
   }
 }

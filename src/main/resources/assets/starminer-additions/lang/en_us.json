@@ -1,6 +1,6 @@
 {
   "item.starminer-additions.star_core": "Stellar Core",
-  "itemgroup.starminer": "Star Miner Odyssey",
+  "itemGroup.starminer.main": "Star Miner Odyssey",
   "item.starminerodyssey.stellar_core.info": "The core from a star. Holds incredible amounts of energy.",
   "item.starminerodyssey.stellar_core.energy": "§bEnergy: %s / %s §bE",
   "item.starminerodyssey.stellar_core.percentage": "§1Charge: %s%%",

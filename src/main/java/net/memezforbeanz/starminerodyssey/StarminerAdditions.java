@@ -1,33 +1,34 @@
 package net.memezforbeanz.starminerodyssey;
 
-import net.fabricmc.api.ModInitializer;
-
-import net.memezforbeanz.starminerodyssey.fluid.ModFluids;
-import net.memezforbeanz.starminerodyssey.item.ModItems;
-import net.memezforbeanz.starminerodyssey.item.ModItemGroups;
-import net.memezforbeanz.starminerodyssey.blocks.ModBlocks;
+import earth.terrarium.adastra.common.planets.AdAstraData;
+import net.memezforbeanz.starminerodyssey.registry.*;
+import net.memezforbeanz.starminerodyssey.blocks.fluid.ModFluidProperties;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.PreparableReloadListener;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
+import com.mojang.logging.LogUtils;
+import earth.terrarium.adastra.common.network.NetworkHandler;
+import earth.terrarium.adastra.common.utils.radio.StationLoader;
 
+import java.util.function.BiConsumer;
 
-public class StarminerAdditions implements ModInitializer {
+public class StarminerAdditions {
 	public static final String MOD_ID = "starminer-additions";
+	public static final Logger LOGGER = LogUtils.getLogger();
 
-
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-
-	@Override
-	public void onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
-
-		LOGGER.info("This truly has been a star miner odyssey...");
-		ModItemGroups.register();
-		ModItems.register();
-		ModFluids.register();
-		ModBlocks.register();
+	public StarminerAdditions() {
 	}
+
+	public static void init() {
+		NetworkHandler.init();
+		StationLoader.init();
+		ModFluidProperties.FLUID_PROPERTIES.initialize();
+		ModFluids.FLUIDS.init();
+		ModBlocks.BLOCKS.init();
+		ModItems.ITEMS.init();
+		Tabs.TABS.init();
+	}
+
 }
