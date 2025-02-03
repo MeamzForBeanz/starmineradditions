@@ -68,7 +68,6 @@ public class HeliumLiquidBlock extends BotariumLiquidBlock {
 
             if (blockState.is(Blocks.SNOW_BLOCK) || blockState.is(Blocks.POWDER_SNOW)) {
                 level.setBlockAndUpdate(blockPos, Blocks.WATER.defaultBlockState());
-
                 level.levelEvent(1501, pos, 0);
                 return false;
             }

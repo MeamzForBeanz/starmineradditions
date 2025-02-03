@@ -1,4 +1,4 @@
-package net.memezforbeanz.starminerodyssey.blocks.fluid;
+package net.memezforbeanz.starminerodyssey.registry;
 
 import earth.terrarium.botarium.common.registry.fluid.FluidData;
 import earth.terrarium.botarium.common.registry.fluid.FluidProperties;

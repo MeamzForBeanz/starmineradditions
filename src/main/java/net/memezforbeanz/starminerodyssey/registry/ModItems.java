@@ -5,7 +5,6 @@ import com.teamresourceful.resourcefullib.common.registry.RegistryEntry;
 import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistries;
 import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistry;
 import earth.terrarium.botarium.common.registry.fluid.FluidBucketItem;
-import net.memezforbeanz.starminerodyssey.blocks.fluid.ModFluidProperties;
 import net.minecraft.core.registries.BuiltInRegistries;
 
 import net.minecraft.world.item.Item;

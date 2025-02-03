@@ -4,15 +4,12 @@ import com.teamresourceful.resourcefullib.common.registry.RegistryEntry;
 import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistries;
 import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistry;
 
-import earth.terrarium.botarium.common.registry.fluid.BotariumLiquidBlock;
 import net.memezforbeanz.starminerodyssey.StarminerAdditions;
 import net.memezforbeanz.starminerodyssey.blocks.fluid.HeliumLiquidBlock;
-import net.memezforbeanz.starminerodyssey.blocks.fluid.ModFluidProperties;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.material.MapColor;
 
 public class ModBlocks {
