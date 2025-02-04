@@ -10,6 +10,14 @@ base {
 	archivesName = project.archives_base_name
 }
 
+loom {
+	mixin {
+		// Set the default refmap name
+		defaultRefmapName = "starminer-additions-refmap.json"
+
+	}
+}
+
 repositories {
 	maven {
 		url = "https://api.modrinth.com/maven"
@@ -81,6 +89,7 @@ tasks.withType(JavaCompile).configureEach {
 	it.options.release = 17
 }
 
+
 java {
 	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
 	// if it is present.
@@ -96,6 +105,7 @@ jar {
 		rename { "${it}_${project.base.archivesName.get()}"}
 	}
 }
+
 
 // configure the maven publication
 publishing {

@@ -1,6 +1,7 @@
 {
 	"required": true,
 	"package": "net.memezforbeanz.starminerodyssey.mixin",
+	"refmap" : "starminer-additions-refmap.json",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
 		"AbstractFieldGeneratorBlockEntityMixin"
