@@ -1,0 +1,128 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.stellar_gravity",
+				"texture_width": 16,
+				"texture_height": 16,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "star_core",
+					"pivot": [-0.75, 10.5, -0.45],
+					"cubes": [
+						{
+							"origin": [-7.575, 2.1, -8.43],
+							"size": [16.8, 16.8, 17.85],
+							"uv": {
+								"north": {"uv": [0, 0], "uv_size": [16, 16]},
+								"east": {"uv": [0, 0], "uv_size": [16, 16]},
+								"south": {"uv": [0, 0], "uv_size": [16, 16]},
+								"west": {"uv": [0, 0], "uv_size": [16, 16]},
+								"up": {"uv": [16, 16], "uv_size": [-16, -16]},
+								"down": {"uv": [16, 16], "uv_size": [-16, -16]}
+							}
+						}
+					]
+				},
+				{
+					"name": "group2",
+					"parent": "star_core",
+					"pivot": [-4.845, 14.595, 3.33],
+					"cubes": [
+						{
+							"origin": [-3.375, 6.3, -10.53],
+							"size": [8.4, 8.4, 22.05],
+							"uv": {
+								"north": {"uv": [0, 0], "uv_size": [16, 16]},
+								"east": {"uv": [0, 0], "uv_size": [16, 16]},
+								"south": {"uv": [0, 0], "uv_size": [16, 16]},
+								"west": {"uv": [0, 0], "uv_size": [16, 16]},
+								"up": {"uv": [16, 16], "uv_size": [-16, -16], "uv_rotation": 270},
+								"down": {"uv": [16, 16], "uv_size": [-16, -16], "uv_rotation": 90}
+							}
+						},
+						{
+							"origin": [-6.525, 3.15, -9.48],
+							"size": [14.7, 14.7, 19.95],
+							"uv": {
+								"north": {"uv": [0, 0], "uv_size": [16, 16]},
+								"east": {"uv": [0, 0], "uv_size": [16, 16]},
+								"south": {"uv": [0, 0], "uv_size": [16, 16]},
+								"west": {"uv": [0, 0], "uv_size": [16, 16]},
+								"up": {"uv": [16, 16], "uv_size": [-16, -16]},
+								"down": {"uv": [16, 16], "uv_size": [-16, -16]}
+							}
+						}
+					]
+				},
+				{
+					"name": "group3",
+					"parent": "star_core",
+					"pivot": [-4.845, 14.595, 3.33],
+					"cubes": [
+						{
+							"origin": [-6.525, 1.05, -7.38],
+							"size": [14.7, 18.9, 15.75],
+							"uv": {
+								"north": {"uv": [0, 0], "uv_size": [16, 16], "uv_rotation": 180},
+								"east": {"uv": [0, 0], "uv_size": [16, 16], "uv_rotation": 90},
+								"south": {"uv": [0, 0], "uv_size": [16, 16]},
+								"west": {"uv": [0, 0], "uv_size": [16, 16], "uv_rotation": 270},
+								"up": {"uv": [16, 16], "uv_size": [-16, -16]},
+								"down": {"uv": [16, 16], "uv_size": [-16, -16], "uv_rotation": 180}
+							}
+						}
+					]
+				},
+				{
+					"name": "group4",
+					"parent": "star_core",
+					"pivot": [-4.845, 14.595, 3.33],
+					"cubes": [
+						{
+							"origin": [-9.675, 6.3, -3.705],
+							"size": [21, 8.4, 8.4],
+							"uv": {
+								"north": {"uv": [0, 0], "uv_size": [16, 16], "uv_rotation": 270},
+								"east": {"uv": [0, 0], "uv_size": [16, 16], "uv_rotation": 90},
+								"south": {"uv": [0, 0], "uv_size": [16, 16], "uv_rotation": 270},
+								"west": {"uv": [0, 0], "uv_size": [16, 16], "uv_rotation": 270},
+								"up": {"uv": [16, 16], "uv_size": [-16, -16]},
+								"down": {"uv": [16, 16], "uv_size": [-16, -16], "uv_rotation": 180}
+							}
+						},
+						{
+							"origin": [-3.375, 0, -3.705],
+							"size": [8.4, 21, 8.4],
+							"uv": {
+								"north": {"uv": [0, 0], "uv_size": [16, 16], "uv_rotation": 180},
+								"east": {"uv": [0, 0], "uv_size": [16, 16], "uv_rotation": 90},
+								"south": {"uv": [0, 0], "uv_size": [16, 16]},
+								"west": {"uv": [0, 0], "uv_size": [16, 16], "uv_rotation": 270},
+								"up": {"uv": [16, 16], "uv_size": [-16, -16]},
+								"down": {"uv": [16, 16], "uv_size": [-16, -16], "uv_rotation": 180}
+							}
+						},
+						{
+							"origin": [-8.625, 3.15, -7.38],
+							"size": [18.9, 14.7, 15.75],
+							"uv": {
+								"north": {"uv": [0, 0], "uv_size": [16, 16], "uv_rotation": 270},
+								"east": {"uv": [0, 0], "uv_size": [16, 16], "uv_rotation": 90},
+								"south": {"uv": [0, 0], "uv_size": [16, 16], "uv_rotation": 270},
+								"west": {"uv": [0, 0], "uv_size": [16, 16], "uv_rotation": 270},
+								"up": {"uv": [16, 16], "uv_size": [-16, -16]},
+								"down": {"uv": [16, 16], "uv_size": [-16, -16], "uv_rotation": 180}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}
