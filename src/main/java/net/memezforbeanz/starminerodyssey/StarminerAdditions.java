@@ -1,5 +1,6 @@
 package net.memezforbeanz.starminerodyssey;
 
+import earth.terrarium.adastra.common.registry.ModEntityTypes;
 import net.memezforbeanz.starminerodyssey.registry.*;
 import net.memezforbeanz.starminerodyssey.registry.ModFluidProperties;
 import org.slf4j.Logger;
@@ -24,6 +25,7 @@ public class StarminerAdditions {
 		ModBlocks.BLOCKS.init();
 		ModItems.ITEMS.init();
 		Tabs.TABS.init();
+		ModBlockEntityTypes.BLOCK_ENTITY_TYPES.init();
 	}
 
 }
