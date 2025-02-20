@@ -1,14 +1,26 @@
 package net.memezforbeanz.starminerodyssey.item.custom;
 
+import earth.terrarium.adastra.common.constants.ConstantComponents;
+import earth.terrarium.adastra.common.utils.DistributionMode;
+import earth.terrarium.adastra.common.utils.TooltipUtils;
+import earth.terrarium.botarium.common.energy.EnergyApi;
+import earth.terrarium.botarium.common.energy.base.BotariumEnergyItem;
+import earth.terrarium.botarium.common.energy.base.EnergyContainer;
+import earth.terrarium.botarium.common.energy.impl.SimpleEnergyContainer;
+import earth.terrarium.botarium.common.energy.impl.WrappedItemEnergyContainer;
+import earth.terrarium.botarium.common.item.ItemStackHolder;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.memezforbeanz.starminerodyssey.StarminerAdditions;
 import net.memezforbeanz.starminerodyssey.item.client.StellarCoreRenderer;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -20,6 +32,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.client.RenderProvider;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -37,7 +51,9 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class StellarCoreItem extends Item implements GeoItem, SimpleEnergyItem {
+public class StellarCoreItem extends Item implements GeoItem, BotariumEnergyItem<WrappedItemEnergyContainer> {
+    public static final String ACTIVE_TAG = "Active";
+    public static final String MODE_TAG = "Mode";
     private final long capacity;
     private final long maxInput;
     private final long maxOutput;
@@ -51,76 +67,140 @@ public class StellarCoreItem extends Item implements GeoItem, SimpleEnergyItem {
         this.maxOutput = maxOutput;
     }
 
-    @Override
-    public boolean isBarVisible(ItemStack stack) {
-        return getStoredEnergy(stack) > 0;
+    public static boolean active(ItemStack stack) {
+        CompoundTag tag = stack.getOrCreateTag();
+        return tag.contains("Active") ? tag.getBoolean("Active") : true;
     }
 
-    @Override
-    public int getBarWidth(ItemStack stack) {
-        long stored = getStoredEnergy(stack);
-        return Math.round(13.0F * stored / capacity);
+    public static boolean toggleActive(ItemStack stack) {
+        CompoundTag tag = stack.getOrCreateTag();
+        boolean active = active(stack);
+        tag.putBoolean("Active", !active);
+        return !active;
     }
 
-    @Override
-    public int getBarColor(ItemStack stack) {
-        return 0x00FF00;
+    public static DistributionMode mode(ItemStack stack) {
+        CompoundTag tag = stack.getOrCreateTag();
+        return tag.contains("Mode") ? DistributionMode.values()[tag.getByte("Mode")] : DistributionMode.SEQUENTIAL;
     }
 
-    @Override
-    public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
-        long stored = getStoredEnergy(stack);
-
-        float percentage = (float) stored / capacity * 100;
-        tooltip.add(Component.translatable("item.starminerodyssey.stellar_core.info"));
-
-        if (!Screen.hasShiftDown()) return;
-
-        tooltip.add(Component.translatable("item.starminerodyssey.stellar_core.energy",
-                String.format("%,d", stored),
-                String.format("%,d", capacity)));
-
-        tooltip.add(Component.translatable("item.starminerodyssey.stellar_core.percentage",
-                String.format("%.1f", percentage)));
-
-        tooltip.add(Component.translatable("item.starminerodyssey.stellar_core.transfer_rate",
-                String.format("%,d", maxOutput)));
+    public static DistributionMode toggleMode(ItemStack stack) {
+        CompoundTag tag = stack.getOrCreateTag();
+        DistributionMode mode = mode(stack);
+        DistributionMode toggled = mode == DistributionMode.SEQUENTIAL ? DistributionMode.ROUND_ROBIN : DistributionMode.SEQUENTIAL;
+        tag.putByte("Mode", (byte)toggled.ordinal());
+        return toggled;
     }
 
-    @Override
-    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean selected) {
-        if (level.isClientSide) return;
+    public WrappedItemEnergyContainer getEnergyStorage(ItemStack holder) {
+        return new WrappedItemEnergyContainer(holder, new SimpleEnergyContainer(this.capacity,this.maxOutput, this.maxInput) {
+            public long maxInsert() {
+                return maxInput;
+            }
 
-        // Check if the entity has an inventory
-        if (!(entity instanceof Player player)) return;
-        Inventory inventory = player.getInventory();
+            public long maxExtract() {
+                return maxOutput;
+            }
+        });
+    }
 
-        // Try all directions since we don't know which side the energy should go to
-        for (Direction direction : Direction.values()) {
-            BlockPos pos = entity.blockPosition();
-            EnergyStorage targetStorage = EnergyStorage.SIDED.find(level, pos, direction);
+    public boolean isBarVisible(@NotNull ItemStack stack) {
+        return this.getEnergyStorage(stack).getStoredEnergy() > 0L;
+    }
 
-            if (targetStorage != null) {
-                ContainerItemContext itemContext = ContainerItemContext.withConstant(stack);
-                EnergyStorage itemStorage = EnergyStorage.ITEM.find(stack, itemContext);
+    public int getBarWidth(@NotNull ItemStack stack) {
+        WrappedItemEnergyContainer energyStorage = this.getEnergyStorage(stack);
+        return (int)((double)energyStorage.getStoredEnergy() / (double)energyStorage.getMaxCapacity() * (double)13.0F);
+    }
 
-                if (itemStorage != null) {
-                    try (Transaction transaction = Transaction.openOuter()) {
-                        long transferred = EnergyStorageUtil.move(
-                                itemStorage,
-                                targetStorage,
-                                maxOutput,
-                                transaction
-                        );
+    public int getBarColor(@NotNull ItemStack stack) {
+        return 6544578;
+    }
 
-                        if (transferred > 0) {
-                            transaction.commit();
-                            spawnEnergyTransferEffects(level, pos);
-                            break; // Exit after successful transfer
+    public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag isAdvanced) {
+        WrappedItemEnergyContainer energy = this.getEnergyStorage(stack);
+        tooltipComponents.add(TooltipUtils.getEnergyComponent(energy.getStoredEnergy(), energy.getMaxCapacity()));
+        tooltipComponents.add(TooltipUtils.getActiveInactiveComponent(active(stack)));
+        tooltipComponents.add(TooltipUtils.getDistributionModeComponent(mode(stack)));
+        tooltipComponents.add(TooltipUtils.getMaxEnergyInComponent(energy.maxInsert()));
+        tooltipComponents.add(TooltipUtils.getMaxEnergyOutComponent(energy.maxExtract()));
+        TooltipUtils.addDescriptionComponent(tooltipComponents, net.memezforbeanz.starminerodyssey.constants.ConstantComponents.STELLAR_CORE_INFO);
+    }
+
+    public @NotNull InteractionResultHolder<ItemStack> use(Level level, @NotNull Player player, @NotNull InteractionHand usedHand) {
+        if (level.isClientSide()) {
+            return InteractionResultHolder.pass(player.getItemInHand(usedHand));
+        } else {
+            ItemStack stack = player.getItemInHand(usedHand);
+            if (player.isShiftKeyDown()) {
+                DistributionMode mode = toggleMode(stack);
+                player.displayClientMessage(mode == DistributionMode.SEQUENTIAL ? ConstantComponents.CHANGE_MODE_SEQUENTIAL : ConstantComponents.CHANGE_MODE_ROUND_ROBIN, true);
+            } else {
+                boolean active = toggleActive(stack);
+                player.displayClientMessage(active ? ConstantComponents.CAPACITOR_ENABLED : ConstantComponents.CAPACITOR_DISABLED, true);
+            }
+
+            return InteractionResultHolder.pass(stack);
+        }
+    }
+
+    public void inventoryTick(@NotNull ItemStack stack, @NotNull Level level, @NotNull Entity entity, int slotId, boolean isSelected) {
+        if (!level.isClientSide()) {
+            if (entity.tickCount % 5 != 0) {
+                if (active(stack)) {
+                    if (entity instanceof Player) {
+                        Player player = (Player)entity;
+                        Inventory inventory = player.getInventory();
+                        WrappedItemEnergyContainer container = this.getEnergyStorage(stack);
+                        if (container.getStoredEnergy() != 0L) {
+                            ItemStackHolder from = new ItemStackHolder(stack);
+                            switch (mode(stack)) {
+                                case SEQUENTIAL -> this.distributeSequential(from, container.maxExtract() * 5L, inventory);
+                                case ROUND_ROBIN -> this.distributeRoundRobin(from, container.maxExtract() * 5L, inventory);
+                            }
+
+                            inventory.setItem(slotId, from.getStack());
                         }
                     }
                 }
             }
+        }
+    }
+
+    public void distributeSequential(ItemStackHolder from, long maxExtract, Inventory inventory) {
+        for(int i = inventory.getContainerSize() - 1; i >= 0; --i) {
+            ItemStack stack = inventory.getItem(i);
+            if (!stack.isEmpty() && !stack.is(this)) {
+                ItemStackHolder to = new ItemStackHolder(stack);
+                long moved = EnergyApi.moveEnergy(from, to, maxExtract, false);
+                inventory.setItem(i, to.getStack());
+                if (moved > 0L) {
+                    return;
+                }
+            }
+        }
+
+    }
+
+    public void distributeRoundRobin(ItemStackHolder from, long maxExtract, Inventory inventory) {
+        int energyItems = 0;
+
+        for(int i = 0; i < inventory.getContainerSize(); ++i) {
+            if (EnergyContainer.holdsEnergy(inventory.getItem(i)) && !inventory.getItem(i).is(this)) {
+                ++energyItems;
+            }
+        }
+
+        if (energyItems != 0) {
+            for(int i = 0; i < inventory.getContainerSize(); ++i) {
+                ItemStack stack = inventory.getItem(i);
+                if (!stack.is(this) && !stack.isEmpty() && !stack.is(this)) {
+                    ItemStackHolder to = new ItemStackHolder(stack);
+                    EnergyApi.moveEnergy(from, to, maxExtract / (long)energyItems, false);
+                    inventory.setItem(i, to.getStack());
+                }
+            }
+
         }
     }
 
@@ -182,22 +262,6 @@ public class StellarCoreItem extends Item implements GeoItem, SimpleEnergyItem {
         }
     }
 
-
-    @Override
-    public long getEnergyCapacity(ItemStack stack) {
-        return capacity;
-    }
-
-    @Override
-    public long getEnergyMaxInput(ItemStack stack) {
-        return maxInput;
-    }
-
-    @Override
-    public long getEnergyMaxOutput(ItemStack stack) {
-        return maxOutput;
-    }
-
     @Override
     public void createRenderer(Consumer<Object> consumer) {
         consumer.accept(new RenderProvider() {
@@ -233,5 +297,8 @@ public class StellarCoreItem extends Item implements GeoItem, SimpleEnergyItem {
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
+    }
+    public boolean allowNbtUpdateAnimation(Player player, InteractionHand hand, ItemStack oldStack, ItemStack newStack) {
+        return false;
     }
 }

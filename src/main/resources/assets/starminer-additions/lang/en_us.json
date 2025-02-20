@@ -1,10 +1,13 @@
 {
   "item.starminer-additions.star_core": "Stellar Core",
   "itemGroup.starminer.main": "Star Miner Odyssey",
-  "item.starminerodyssey.stellar_core.info": "The core from a star. Holds incredible amounts of energy.",
-  "item.starminerodyssey.stellar_core.energy": "§bEnergy: %s / %s §bE",
-  "item.starminerodyssey.stellar_core.percentage": "§1Charge: %s%%",
-  "item.starminerodyssey.stellar_core.transfer_rate": "§4Transfer Rate: %s §4E/t",
+  "info.starminer-additions.star_core.info": "The core from a star. Holds incredible amounts of energy.",
+  "info.starminer-additions.star_core.energy": "§bEnergy: %s / %s §bE",
+  "info.starminer-additions.star_core.percentage": "§1Charge: %s%%",
+  "info.starminer-additions.star_core.transfer_rate": "§4Transfer Rate: %s §4E/t",
   "item.starminer-additions.star_helium_bucket": "Dense Helium Bucket",
-  "info.starminer-additions.stellar_gravity" : ""
+  "info.starminer-additions.stellar_gravity" : "Natural gravity producing stellar core. Unobtainable in survival, but drops the depleted Stellar Core Item when mined.",
+  "block.starminer-additions.stellar_gravity" : "Stellar Gravity",
+  "tooltip.starminer-additions.max_energy_in": "Max In: %s ⚡/t",
+  "tooltip.starminer-additions.max_energy_out": "Max Out: %s ⚡/t"
 }

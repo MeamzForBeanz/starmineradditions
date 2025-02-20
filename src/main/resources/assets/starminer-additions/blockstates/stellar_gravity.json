@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "starminer-additions:block/stellar_gravity"
+    }
+  }
+}

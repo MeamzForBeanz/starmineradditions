@@ -1,0 +1,7 @@
+{
+  "credit": "Made with Blockbench",
+  "parent": "starminer-additions:block/stellar_gravity",
+  "textures": {
+    "particle": "starminer-additions:block/stellar_gravity"
+  }
+}

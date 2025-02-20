@@ -27,7 +27,7 @@ public class ModBlocks {
         BLOCKS = ResourcefulRegistries.create(BuiltInRegistries.BLOCK, StarminerAdditions.MOD_ID);
         FLUIDS = ResourcefulRegistries.create(BLOCKS);
         HELIUM = FLUIDS.register("star_helium", () -> new HeliumLiquidBlock(ModFluidProperties.HELIUM, BlockBehaviour.Properties.copy(Blocks.WATER).mapColor(MapColor.COLOR_CYAN)));
-        STELLARGRAVITY = BLOCKS.register("stellar_gravity", () -> new StellarGravityBlock(BlockBehaviour.Properties.copy(Blocks.OBSIDIAN)));
+        STELLARGRAVITY = BLOCKS.register("stellar_gravity", () -> new StellarGravityBlock(BlockBehaviour.Properties.copy(Blocks.OBSIDIAN).lightLevel(state -> 8).noOcclusion()));
 
     }
 }

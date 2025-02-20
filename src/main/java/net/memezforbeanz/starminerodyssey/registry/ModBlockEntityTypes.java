@@ -8,7 +8,7 @@ import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistry;
 
 import earth.terrarium.botarium.common.registry.RegistryHelpers;
 import net.memezforbeanz.starminerodyssey.StarminerAdditions;
-import net.memezforbeanz.starminerodyssey.blockentities.StellarGravityBlockEntity;
+import net.memezforbeanz.starminerodyssey.blockentities.custom.StellarGravityBlockEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;

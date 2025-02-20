@@ -17,7 +17,9 @@
 	"entrypoints": {
 		"main": [
 			"net.memezforbeanz.starminerodyssey.StarminerAdditions::init"
-
+		],
+		"client": [
+			"net.memezforbeanz.starminerodyssey.StarminerAdditionsClient"
 		],
 		"fabric-datagen": [
 			"net.memezforbeanz.starminerodyssey.StarminerAdditionsDataGenerator"
